@@ -16,7 +16,7 @@ export default function LoginPage() {
 		});
 		if (res.ok) {
 			router.replace('/dashboard');
-			console.log('router: ', router);
+			console.log('router: ', router)
 		} else {
 			alert('Invalid credentials');
 		}
@@ -25,7 +25,7 @@ export default function LoginPage() {
 	return (
 		<div className="flex min-h-screen items-center justify-center">
 			<form onSubmit={login} className="bg-white p-6 rounded shadow-md w-80">
-				<h1 className="text-xl font-bold mb-4">Login</h1>
+				<h1 className="text-xl font-bold mb-4 text-black">Login</h1>
 				<input
 					type="text"
 					placeholder="Username"
