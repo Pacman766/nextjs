@@ -2,10 +2,10 @@
 
 import useSWR from 'swr';
 import { fetchFromAPI } from '@/lib/fetcher';
-import { type Post } from '@/types/types';
+import { Post } from '@/types/types';
 
 export default function ClientPosts({ initialData }: { initialData: Post[] }) {
-	const { data, error, isLoading } = useSWR('/api/posts', fetchFromAPI, {
+	const { data, error, isLoading } = useSWR<Post[]>('/api/posts', fetchFromAPI, {
 		fallbackData: initialData, // 👈 передаем данные с SSR
 		revalidateOnFocus: true, // автообновление при фокусе окна
 	});
