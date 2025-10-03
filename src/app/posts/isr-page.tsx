@@ -3,7 +3,8 @@ export const revalidate = 10; // ⚡️ ISR каждые 10 секунд
 
 async function getPosts() {
 	const res = await fetch('https://jsonplaceholder.typicode.com/posts', {
-		next: { revalidate: 10 }, // 👉 важный момент
+		next: { revalidate: 10 },
+		credentials: 'include', // 👉 важный момент
 	});
 	return res.json();
 }

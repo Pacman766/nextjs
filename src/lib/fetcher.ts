@@ -5,7 +5,7 @@ export async function fetchFromAPI<T>(url: string): Promise<T> {
 }
 
 export async function fetchPosts() {
-	const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+	const res = await fetch('https://jsonplaceholder.typicode.com/posts', { credentials: 'include' });
 	if (!res.ok) throw new Error('Failed to fetch posts');
 	return res.json();
 }
