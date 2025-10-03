@@ -16,7 +16,6 @@ export default function LoginPage() {
 		});
 		if (res.ok) {
 			router.replace('/dashboard');
-			console.log('router: ', router)
 		} else {
 			alert('Invalid credentials');
 		}
