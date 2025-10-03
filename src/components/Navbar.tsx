@@ -5,7 +5,7 @@ export default function Navbar() {
 	const router = useRouter();
 
 	const logout = async () => {
-		await fetch('/api/auth', { method: 'DELETE' });
+		await fetch('/api/auth', { method: 'DELETE', credentials: 'include' });
 		router.replace('/dashboard');
 	};
 
