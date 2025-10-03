@@ -7,7 +7,7 @@ export default function Protected({ children }: { children: React.ReactNode }) {
 	const router = useRouter();
 
 	useEffect(() => {
-		fetch('/api/posts') // проверим доступ к защищённому API
+		fetch('/api/posts', { credentials: 'include' }) // проверим доступ к защищённому API
 			.then((res) => {
 				if (res.status === 401) {
 					router.push('/login');
