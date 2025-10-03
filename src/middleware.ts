@@ -14,5 +14,8 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-	matcher: ['/((?!_next|api|favicon.ico).*)'], // применяем ко всем страницам, кроме служебных
+	matcher: [
+		'/dashboard/:path*', // только для /dashboard и вложенных
+		'/profile/:path*', // только для /profile
+	], // применяем ко всем страницам, кроме служебных
 };
