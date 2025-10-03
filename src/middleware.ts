@@ -1,11 +1,14 @@
-// middleware.ts
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(req: NextRequest) {
-	const isAuth = req.cookies.get('token'); // или сессия из JWT/NextAuth
+	const token = req.cookies.get('token');
 
-	if (!isAuth && !req.nextUrl.pathname.startsWith('/login')) {
+	// 🔹 Защищаем только нужные маршруты
+	const protectedPaths = ['/dashboard', '/profile'];
+	const isProtected = protectedPaths.some((path) => req.nextUrl.pathname.startsWith(path));
+
+	if (isProtected && !token) {
 		const loginUrl = new URL('/login', req.url);
 		return NextResponse.redirect(loginUrl);
 	}
@@ -14,8 +17,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-	matcher: [
-		'/dashboard/:path*', // только для /dashboard и вложенных
-		'/profile/:path*', // только для /profile
-	], // применяем ко всем страницам, кроме служебных
+	matcher: ['/dashboard/:path*', '/profile/:path*'],
 };

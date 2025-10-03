@@ -1,24 +1,29 @@
-import Protected from '@/components/Protected';
-import Navbar from '@/components/Navbar';
-import ClientPosts from '@/components/ClientPosts';
-import ISRPosts from '../posts/isr-page';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { fetchFromAPI } from '@/lib/fetcher';
+import { Post } from '@/types/types';
+import PostCard from '@/components/PostCard';
 
-// ⚡️ Этот компонент рендерится на сервере
-// async function getPostsSSR() {
-// 	const res = await fetch('http://localhost:3000/api/posts', { cache: 'no-store' });
-// 	if (!res.ok) return [];
-// 	return res.json();
-// }
+async function getPosts(): Promise<Post[]> {
+	return fetchFromAPI('https://jsonplaceholder.typicode.com/posts');
+}
 
-export default async function Dashboard() {
-	// const initialData = await getPostsSSR(); // данные загружаются при SSR
+export default async function DashboardPage() {
+	const token = (await cookies()).get('token')?.value;
+
+	// 🔹 Если нет токена → редирект сразу на сервере
+	if (!token) redirect('/login');
+
+	const posts = await getPosts();
 
 	return (
-		<Protected>
-			<Navbar />
-			<div className="p-4">
-				<ISRPosts />
+		<div className="p-6">
+			<h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+			<div className="grid gap-4">
+				{posts.slice(0, 5).map((post) => (
+					<PostCard key={post.id} post={post} />
+				))}
 			</div>
-		</Protected>
+		</div>
 	);
 }

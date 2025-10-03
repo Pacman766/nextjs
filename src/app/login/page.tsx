@@ -13,9 +13,11 @@ export default function LoginPage() {
 			method: 'POST',
 			body: JSON.stringify({ username, password }),
 			headers: { 'Content-Type': 'application/json' },
-			credentials: 'include',
+			credentials: 'include', // важно для HttpOnly cookie
 		});
+
 		if (res.ok) {
+			// 🔹 replace, чтобы нельзя было вернуться назад на login
 			router.replace('/dashboard');
 		} else {
 			alert('Invalid credentials');
